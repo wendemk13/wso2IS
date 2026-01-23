@@ -4,6 +4,7 @@ import com.wso2.wso2.entity.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,9 +15,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 public class TestController {
-    @GetMapping("/")
-    public String index(@AuthenticationPrincipal OAuth2User principal) {
-        return "Hello, " + principal.getAttribute("name") + ". You are logged in!";
+
+    @GetMapping("/hello")
+    public String index(@AuthenticationPrincipal Jwt jwt) {
+        return "Hello, " + jwt.getSubject() + ". Token accepted!";
     }
 
     @GetMapping("/students")
